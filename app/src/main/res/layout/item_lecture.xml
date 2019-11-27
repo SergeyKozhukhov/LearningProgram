@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/item_box"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_lecture_TextView_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        tools:text="1" />
+
+
+    <TextView
+        android:id="@+id/item_lecture_TextView_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/item_lecture_TextView_number"
+        android:layout_toEndOf="@id/item_lecture_TextView_number"
+        tools:text="03.10.2019" />
+
+
+    <TextView
+        android:id="@+id/item_lecture_TextView_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/item_lecture_TextView_number"
+        android:layout_margin="20dp"
+        android:textSize="20sp"
+        tools:text="Тема лекции" />
+
+    <TextView
+        android:id="@+id/item_lecture_TextView_lector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        tools:text="Лектор" />
+
+    <ImageView
+        android:id="@+id/_item_lecture_ImageView_indicator"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_alignTop="@id/item_lecture_TextView_lector"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+
+        android:src="@drawable/indicator_time" />
+
+</RelativeLayout>
