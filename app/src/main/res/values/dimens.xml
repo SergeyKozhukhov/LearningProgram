@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_lecture_rl_margin">8dp</dimen>
+    <dimen name="item_lecture_tv_number_margin">20dp</dimen>
+    <dimen name="item_lecture_tv_theme_margin">20dp</dimen>
+    <dimen name="item_lecture_tv_theme_text_size">20sp</dimen>
+    <dimen name="item_lecture_tv_lector_margin">20dp</dimen>
+    <dimen name="item_lecture_iv_indicator_margin_top">25dp</dimen>
+    <dimen name="item_lecture_iv_indicator_margin_right">20dp</dimen>
+    <dimen name="item_week_ll_margin">8dp</dimen>
+    <dimen name="item_week_tv_period_text_size">20sp</dimen>
+    <dimen name="item_week_tv_period_padding_top">10dp</dimen>
+    <dimen name="item_week_tv_period_padding_left">10dp</dimen>
+    <dimen name="item_week_tv_period_padding_right">10dp</dimen>
+    <dimen name="item_week_iv_indicator_height">10dp</dimen>
+    <dimen name="item_week_iv_indicator_padding_left">20dp</dimen>
+    <dimen name="item_week_iv_indicator_padding_right">20dp</dimen>
+    <dimen name="item_week_iv_indicator_margin_bottom">10dp</dimen>
+</resources>
