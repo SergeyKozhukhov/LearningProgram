@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">LearningProgram</string>
+    <string name="spinner_lectors_item_all">Все</string>
+    <string name="load_lecture_tesk_message_fail">Ошибка загрузки</string>
+    <string name="fragment_details_tv_text">Подробная информация</string>
+    <string name="item_lecture_tv_theme_text">Тема лекции</string>
+    <string name="item_lecture_tv_lector_text">Лектор</string>
 </resources>

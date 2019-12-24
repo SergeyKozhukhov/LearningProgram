@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/item_lecture_rl_margin"
     android:background="@drawable/item_box"
     android:orientation="vertical">
 
@@ -11,7 +11,7 @@
         android:id="@+id/item_lecture_TextView_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/item_lecture_tv_number_margin"
         tools:text="1" />
 
 
@@ -29,17 +29,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/item_lecture_TextView_number"
-        android:layout_margin="20dp"
-        android:textSize="20sp"
-        tools:text="Тема лекции" />
+        android:layout_margin="@dimen/item_lecture_tv_theme_margin"
+        android:textSize="@dimen/item_lecture_tv_theme_text_size"
+        tools:text="@string/item_lecture_tv_theme_text" />
 
     <TextView
         android:id="@+id/item_lecture_TextView_lector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_margin="20dp"
-        tools:text="Лектор" />
+        android:layout_margin="@dimen/item_lecture_tv_lector_margin"
+        tools:text="@string/item_lecture_tv_lector_text" />
 
     <ImageView
         android:id="@+id/_item_lecture_ImageView_indicator"
@@ -47,8 +47,8 @@
         android:layout_height="20dp"
         android:layout_alignTop="@id/item_lecture_TextView_lector"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="@dimen/item_lecture_iv_indicator_margin_top"
+        android:layout_marginRight="@dimen/item_lecture_iv_indicator_margin_right"
 
         android:src="@drawable/indicator_time" />
 

@@ -20,23 +20,24 @@ import ru.kozhukhov.sergey.learningprogram.models.Week;
 /*
  *  Адаптер для отображения списка недель
  * */
-
 public class AdapterWeeks extends RecyclerView.Adapter<AdapterWeeks.ViewHolder> {
 
     /*
-     * mOnItemClickListener - обработчик нажатия на ячейку
      * mWeeks - список недель
      * mDateToday - сегодняшняя дата
      * */
-
-    private OnItemClickListener mOnItemClickListener;
     private final List<Week> mWeeks;
     private final GregorianCalendar mDateToday;
 
-    public AdapterWeeks(List<Week> mWeeks, Date dateToday, OnItemClickListener onItemClickListener) {
+    /*
+     * mOnItemWeekClickListener - обработчик нажатия на ячейку
+     * */
+    private OnItemWeekClickListener mOnItemWeekClickListener;
+
+    public AdapterWeeks(List<Week> mWeeks, Date dateToday, OnItemWeekClickListener onItemWeekClickListener) {
 
         this.mWeeks = mWeeks;
-        this.mOnItemClickListener = onItemClickListener;
+        this.mOnItemWeekClickListener = onItemWeekClickListener;
 
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(dateToday);
@@ -46,7 +47,6 @@ public class AdapterWeeks extends RecyclerView.Adapter<AdapterWeeks.ViewHolder> 
     /*
     * Возвращение позиции недели, которая соответствует сегодняшней дате
     * */
-
     public int getPositionToday() {
 
         Week week = new Week(mDateToday);
@@ -73,7 +73,7 @@ public class AdapterWeeks extends RecyclerView.Adapter<AdapterWeeks.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Week week = mWeeks.get(position);
-        holder.bindView(week, mOnItemClickListener);
+        holder.bindView(week, mOnItemWeekClickListener);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class AdapterWeeks extends RecyclerView.Adapter<AdapterWeeks.ViewHolder> 
 
         }
 
-        private void bindView(final Week week, final OnItemClickListener listener) {
+        private void bindView(final Week week, final OnItemWeekClickListener listener) {
 
             if (mWeek.after(week)) {
                 mImage.setImageLevel(1500);
@@ -106,8 +106,15 @@ public class AdapterWeeks extends RecyclerView.Adapter<AdapterWeeks.ViewHolder> 
                 mImage.setImageLevel(8000);
             }
 
-            mTextViewWeek.setText("(Год: " + week.getYear() + ", неделя: " + week.getWeek() +
-                    ")\n " + "Учебная неделя: " + (getAdapterPosition() + 1));
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("Год: ");
+            stringBuilder.append(week.getYear());
+            stringBuilder.append(", неделя: ");
+            stringBuilder.append(")\n ");
+            stringBuilder.append("Учебная неделя: ");
+            stringBuilder.append(getAdapterPosition() + 1);
+
+            mTextViewWeek.setText(stringBuilder);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

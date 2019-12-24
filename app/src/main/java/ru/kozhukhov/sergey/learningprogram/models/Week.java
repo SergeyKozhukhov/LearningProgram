@@ -1,20 +1,18 @@
 package ru.kozhukhov.sergey.learningprogram.models;
 
-/*
- * Модель недели, на которой проводиться занятие
- * */
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/*
+ * Модель недели, на которой проводиться занятие
+ * */
 public class Week {
 
     /*
      * week - порядковый номер недели, начиная с начала года
      * year - год
      * */
-
     private int week;
     private int year;
 
@@ -44,11 +42,9 @@ public class Week {
         return year;
     }
 
-
     /*
      * Проверка равенства недель
      * */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,7 +56,6 @@ public class Week {
     /*
      * Вычисление hashCode для Week
      * */
-
     @Override
     public int hashCode() {
 

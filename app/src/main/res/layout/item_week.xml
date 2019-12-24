@@ -5,27 +5,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@drawable/item_box"
-    android:layout_margin="8dp">
+    android:layout_margin="@dimen/item_week_ll_margin">
 
     <TextView
         android:id="@+id/item_week_and_year_textView_period"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="20sp"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:textSize="@dimen/item_week_tv_period_text_size"
+        android:paddingTop="@dimen/item_week_tv_period_padding_top"
+        android:paddingLeft="@dimen/item_week_tv_period_padding_left"
+        android:paddingRight="@dimen/item_week_tv_period_padding_right"
         tools:text = "Date" />
 
     <ImageView
         android:id="@+id/_item_week_ImageView_indicator"
         android:src="@drawable/indicator_time"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="@dimen/item_week_iv_indicator_height"
+        android:paddingLeft="@dimen/item_week_iv_indicator_padding_left"
+        android:paddingRight="@dimen/item_week_iv_indicator_padding_right"
+        android:layout_marginBottom="@dimen/item_week_iv_indicator_margin_bottom"
        />
 
 </LinearLayout>

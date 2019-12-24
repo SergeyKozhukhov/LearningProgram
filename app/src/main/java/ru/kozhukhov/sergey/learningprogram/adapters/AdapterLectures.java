@@ -7,12 +7,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import ru.kozhukhov.sergey.learningprogram.R;
 import ru.kozhukhov.sergey.learningprogram.models.Lecture;
@@ -27,14 +29,17 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
     * mLectures - список лекций
     * mDateToday - сегодняшняя дата
     * */
-
     private List<Lecture> mLectures;
     private Date mDateToday;
+
+    /*
+    * mOnItemLectureClickListener - обработчик нажатия на элемент списка лекций
+    * */
+    private OnItemLectureClickListener mOnItemLectureClickListener;
 
     public AdapterLectures(){
 
     }
-
 
     @NonNull
     @Override
@@ -48,7 +53,7 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
 
         Lecture item = mLectures.get(position);
-        ((LectureHolder) holder).bindView(item);
+        ((LectureHolder) holder).bindView(item, mOnItemLectureClickListener);
 
     }
 
@@ -62,9 +67,15 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
     }
 
     /*
+    * Установка обработчика нажатия на элемент списка лекций
+    * */
+    public void setClickListener(@Nullable OnItemLectureClickListener mOnItemLectureClickListener) {
+        this.mOnItemLectureClickListener = mOnItemLectureClickListener;
+    }
+
+    /*
      *  Установка списка лекций в адаптер
      * */
-
     public void setLectures(@NonNull List<Lecture> lectures) {
         if (lectures == null) {
             mLectures = new ArrayList<>();
@@ -76,9 +87,9 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
 
     /*
      * Возвращение позиции лекции, проходящей сегодня или ближайшей к сегодняшней дате
+     *
      * @param lecture - лекция, определение позиции которой требуется
      * */
-
     public int getPositionToday()
     {
         for (int i = 0; i < mLectures.size(); i++) {
@@ -117,10 +128,10 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
             mImage = itemView.findViewById(R.id._item_lecture_ImageView_indicator);
 
             mDateToday = dateToday;
-            dateFormat = new SimpleDateFormat("EEEE, d MMMM yyyy");
+            dateFormat = new SimpleDateFormat("EEEE, d MMMM yyyy", Locale.getDefault());
         }
 
-        private void bindView(Lecture lecture) {
+        private void bindView(final Lecture lecture, final OnItemLectureClickListener mOnItemLectureClickListener) {
 
             mNumber.setText(String.valueOf(lecture.getNumber()));
             mDate.setText(dateFormat.format(lecture.getDate().getTime()));
@@ -134,6 +145,13 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
             } else {
                 mImage.setImageLevel(8000);
             }
+            if (mOnItemLectureClickListener != null)
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemLectureClickListener.onItemClick(lecture);
+                }
+            });
         }
 
     }

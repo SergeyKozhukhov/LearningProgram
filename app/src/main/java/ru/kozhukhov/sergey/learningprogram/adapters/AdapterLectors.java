@@ -11,7 +11,6 @@ import java.util.List;
 /*
  *  Адаптер для отображения списка преподавателей
  * */
-
 public class AdapterLectors extends BaseAdapter {
 
     private List<String> mLectors;
