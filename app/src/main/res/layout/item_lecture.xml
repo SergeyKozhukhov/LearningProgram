@@ -48,8 +48,6 @@
         android:layout_alignTop="@id/item_lecture_TextView_lector"
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/item_lecture_iv_indicator_margin_top"
-        android:layout_marginRight="@dimen/item_lecture_iv_indicator_margin_right"
-
-        android:src="@drawable/indicator_time" />
+        android:layout_marginRight="@dimen/item_lecture_iv_indicator_margin_right" />
 
 </RelativeLayout>

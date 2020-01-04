@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="colorGreen">#008000</color>
+    <color name="colorBefore">#008000</color>
     <color name="colorRed">#B22222</color>
-    <color name="colorYellow">#FFD700</color>
-    <color name="colorBlue">#87CEFA</color>
+    <color name="colorNow">#FFD700</color>
+    <color name="colorAfter">#87CEFA</color>
 </resources>

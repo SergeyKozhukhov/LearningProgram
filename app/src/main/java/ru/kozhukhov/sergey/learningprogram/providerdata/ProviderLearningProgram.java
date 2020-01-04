@@ -18,28 +18,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.kozhukhov.sergey.learningprogram.models.Lecture;
 import ru.kozhukhov.sergey.learningprogram.models.Week;
 
-/*
+/**
  * Поставщик данных об учебной программе
- * */
+ */
 public class ProviderLearningProgram {
 
-    /*
-    * LECTURES_URL - ссылка с данными по лекциям в json формате
-    * */
+    /**
+     * LECTURES_URL - ссылка с данными по лекциям в json формате
+     */
     private static final String LECTURES_URL = "http://landsovet.ru/learning_program.json";
 
-    /*
-    * mLectures - список лекций с информацией о них
-    * */
+    /**
+     * mLectures - список лекций с информацией о них
+     */
     private List<Lecture> mLectures;
 
-    public ProviderLearningProgram(){
-       // mLectures = new ArrayList<>();
-    }
-
-    /*
-    * Загрузка данных по лекциям из массива
-    * */
+    /**
+     * Загрузка данных по лекциям из массива
+     */
     public List<Lecture> loadLectureFromData(){
         mLectures = Arrays.asList(
                 new Lecture(1, new GregorianCalendar(2019, Calendar.NOVEMBER, 12), "Вводное занятие", "Соколов"),
@@ -77,9 +73,9 @@ public class ProviderLearningProgram {
         return new ArrayList<>(mLectures);
     }
 
-    /*
-    * Загрузка данных по лекциям из сети
-    * */
+    /**
+     * Загрузка данных по лекциям из сети
+     */
     public List<Lecture> loadLecturesFromWeb(){
         InputStream inputStream = null;
         try {
@@ -105,16 +101,16 @@ public class ProviderLearningProgram {
         return null;
     }
 
-    /*
-     *  Возвращение всех лекций курса
-     * */
+    /**
+     * Возвращение всех лекций курса
+     */
     public List<Lecture> provideLectures() {
          return mLectures;
     }
 
-    /*
+    /**
      * Возвращение списка лекторов курса
-     * */
+     */
     public List<String> providerLectors() {
         Set<String> lectorsSet = new HashSet<>();
         for (Lecture lecture : mLectures) {
@@ -123,9 +119,9 @@ public class ProviderLearningProgram {
         return new ArrayList<>(lectorsSet);
     }
 
-    /*
+    /**
      * Возвращение списка недель, на которых проводяться лекции
-     * */
+     */
     public List<Week> providerWeeks() {
         Set<Week> weeks = new LinkedHashSet<>();
         for (Lecture lecture : mLectures) {
@@ -135,11 +131,10 @@ public class ProviderLearningProgram {
         return new ArrayList<>(weeks);
     }
 
-    /*
+    /**
      * Возвращение списка лекций с заданной фамилии лектора
-     *
      * @param lectorName - фамилия лектора, по которой производиться фильтрация
-     * */
+     */
     public List<Lecture> filterBy(String lectorName) {
         List<Lecture> lectures = new ArrayList<>();
         for (Lecture lecture : mLectures) {
@@ -147,15 +142,13 @@ public class ProviderLearningProgram {
                 lectures.add(lecture);
             }
         }
-
         return lectures;
     }
 
-    /*
+    /**
      * Возвращение списка лекций, проводящихся на заданной неделе
-     *
      * @param week - неделя, на которой производиться поиск лекций
-     * */
+     */
     public List<Lecture> filterBy(Week week) {
 
         List<Lecture> lectures = new ArrayList<>();
@@ -170,12 +163,11 @@ public class ProviderLearningProgram {
         return lectures;
     }
 
-    /*
+    /**
      * Возвращение списка лекций, проводящихся определенным лектором на заданной неделе
-     *
      * @param lectorName - имя лектора, проводящего занятие
      * @param week - неделя, на которой производиться поиск лекций
-     * */
+     */
     public List<Lecture> filterBy(String lectorName, Week week) {
         List<Lecture> lectures = new ArrayList<>();
 
@@ -187,7 +179,6 @@ public class ProviderLearningProgram {
             }
         }
         return lectures;
-
     }
 
 }

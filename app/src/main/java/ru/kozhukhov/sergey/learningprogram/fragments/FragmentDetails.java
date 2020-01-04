@@ -19,14 +19,14 @@ import ru.kozhukhov.sergey.learningprogram.adapters.AdapterLectureDetails;
 import ru.kozhukhov.sergey.learningprogram.models.Lecture;
 
 
-/*
-* Фрагмент для отображения детальной информации о лекции
-* */
+/**
+ * Фрагмент для отображения детальной информации о лекции
+ */
 public class FragmentDetails extends Fragment {
 
-    /*
-    * ARG_LECTURE - "ключ" для передачи/получения данных
-    * */
+    /**
+     * ARG_LECTURE - "ключ" для передачи/получения данных
+     */
     private static final String ARG_LECTURE = "ARG_LECTURE";
 
     public static FragmentDetails newInstance(@NonNull Lecture lecture) {
@@ -81,9 +81,10 @@ public class FragmentDetails extends Fragment {
         recyclerView.setAdapter(new AdapterLectureDetails(lecture.getSubtopics()));
     }
 
-    /*
-    * Получение данных по лекции, переданных как параметр в newInstance
-    * */
+    /**
+     * Получение данных по лекции, переданных как параметр в newInstance
+     * @return данные по лекции
+     */
     @NonNull
     private Lecture getLectureFromArgs(){
         Bundle arguments = getArguments();

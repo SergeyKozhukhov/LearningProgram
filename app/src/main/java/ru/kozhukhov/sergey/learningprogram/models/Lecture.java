@@ -18,48 +18,59 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-/*
-* Модель лекции
-* */
+/**
+ * Модель лекции
+ */
 public class Lecture implements Parcelable{
 
-
-    /*
+    /**
      * mNumber - порядковый номер занятия
-     * mDate - дата проведения занятия
-     * mTheme - тема занятия
-     * mLector - фамилия преподавателя
-     * mSubtopics - детальная информация о лекции
-     * */
+     */
     private final int mNumber;
-    private final GregorianCalendar mDate;// = new GregorianCalendar(2019, Calendar.NOVEMBER, 12);
+
+    /**
+     * mDate - дата проведения занятия
+     */
+    private final GregorianCalendar mDate;
+
+    /**
+     * mTheme - тема занятия
+     */
     private final String mTheme;
+
+    /**
+     * mLector - фамилия преподавателя
+     */
     private final String mLector;
+
+    /**
+     * mSubtopics - детальная информация о лекции
+     */
     private final List<String> mSubtopics;
 
-   public Lecture(int mNumber, @NonNull GregorianCalendar mDate, @NonNull String mTheme, @NonNull String mLector) {
-        this.mNumber = mNumber;
-        this.mDate = mDate;
-        this.mTheme = mTheme;
-        this.mLector = mLector;
+   public Lecture(int number, @NonNull GregorianCalendar date, @NonNull String theme, @NonNull String lector) {
+        this.mNumber = number;
+        this.mDate = date;
+        this.mTheme = theme;
+        this.mLector = lector;
         mSubtopics = new ArrayList<>();
     }
 
-    /*
-    * Конструктов для работы с jackson
-    * */
+    /**
+     * Конструктов для работы с jackson
+     */
     @JsonCreator
     public Lecture(
-            @JsonProperty("number") int mNumber,
-            @JsonProperty("date") @NonNull String mDate,
-            @JsonProperty("theme") @NonNull String mTheme,
-            @JsonProperty("lector") @NonNull String mLector,
-            @JsonProperty("subtopics") @NonNull List<String> mSubtopics) {
-        this.mNumber = mNumber;
-        this.mDate = stringToCalendar(mDate);
-        this.mTheme = mTheme;
-        this.mLector = mLector;
-        this.mSubtopics = new ArrayList<>(mSubtopics);
+            @JsonProperty("number") int number,
+            @JsonProperty("date") @NonNull String date,
+            @JsonProperty("theme") @NonNull String theme,
+            @JsonProperty("lector") @NonNull String lector,
+            @JsonProperty("subtopics") @NonNull List<String> subtopics) {
+        this.mNumber = number;
+        this.mDate = stringToCalendar(date);
+        this.mTheme = theme;
+        this.mLector = lector;
+        this.mSubtopics = new ArrayList<>(subtopics);
     }
 
     public int getNumber() {
@@ -82,9 +93,9 @@ public class Lecture implements Parcelable{
         return mSubtopics == null ? null : new ArrayList<>(mSubtopics);
     }
 
-    /*
-    * Преобразование строки к формату GregorianCalendar
-    * */
+    /**
+     * Преобразование строки к формату GregorianCalendar
+     */
     private GregorianCalendar stringToCalendar(String date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         try {

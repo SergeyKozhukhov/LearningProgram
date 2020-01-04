@@ -30,53 +30,74 @@ import ru.kozhukhov.sergey.learningprogram.models.Week;
 import ru.kozhukhov.sergey.learningprogram.providerdata.ProviderLearningProgram;
 
 
-/*
+/**
  * Фрагмент для отображения списка лекций с возможностью фильтрации по учебной неделе и преподавателям
- * */
+ */
 public class FragmentLectures extends Fragment {
 
-    /*
+    /**
      * POSITION_ALL - начальня позиция в mSpinnerLectors, отвечающая за отображение всех лекций
-     * dateToday - текущая дата
-     * indicatorWeek - позиция выбранной недели из списка
-     * */
+     */
     private static final int POSITION_ALL = 0;
+
+    /**
+     * dateToday - текущая дата
+     */
     private Date dateToday;
+
+    /**
+     * indicatorWeek - позиция выбранной недели из списка
+     */
     private Week indicatorWeek = null;
 
-    /*
-    * mProviderLearningProgram - поставщик данных по учебной программе
-    * */
-    private ProviderLearningProgram mProviderLearningProgram;
+    /**
+     * mProviderLearningProgram - поставщик данных по учебной программе
+     */
+    private ProviderLearningProgram mProviderLearningProgram = new ProviderLearningProgram();;
 
-    /*
-    * mAdapterLectures - адаптер лекций
-    * mAdapterLectors - адаптер лекторов
-    * mAdapterWeeks - адаптер учебных недель
-    * */
+    /**
+     * mAdapterLectures - адаптер лекций
+     */
     private AdapterLectures mAdapterLectures;
+
+    /**
+     * mAdapterLectors - адаптер лекторов
+     */
     private AdapterLectors mAdapterLectors;
+
+    /**
+     * mAdapterWeeks - адаптер учебных недель
+     */
     private AdapterWeeks mAdapterWeeks;
 
-    /*
-    * mRecyclerViewLectures - отображение списка лекций
-    * mRecyclerViewWeeks - отображение списка учебных недель
-    * */
+    /**
+     * mRecyclerViewLectures - отображение списка лекций
+     */
     private RecyclerView mRecyclerViewLectures;
+
+    /**
+     * mRecyclerViewWeeks - отображение списка учебных недель
+     */
     private RecyclerView mRecyclerViewWeeks;
 
-    /*
-    * mSpinnerLectors - отображение списка лекторов
-    * */
+    /**
+     * mSpinnerLectors - отображение списка лекторов
+     */
     private Spinner mSpinnerLectors;
 
+    /**
+     * mLoadingView - форма отображения процесса загрузки данных
+     */
     private View mLoadingView;
 
-    /*
-    * mOnItemLectureClickListener - обработчик нажатия на элемент списка лекций
-    * mOnItemWeekClickListener - обработчик нажатия на элемент списка учебных недель
-    * */
+    /**
+     * mOnItemLectureClickListener - обработчик нажатия на элемент списка лекций
+     */
     private OnItemLectureClickListener mOnItemLectureClickListener;
+
+    /**
+     * mOnItemWeekClickListener - обработчик нажатия на элемент списка учебных недель
+     */
     private OnItemWeekClickListener mOnItemWeekClickListener;
 
 
@@ -107,6 +128,7 @@ public class FragmentLectures extends Fragment {
         mRecyclerViewLectures = view.findViewById(R.id.recycler_view_lectures);
         mRecyclerViewWeeks = view.findViewById(R.id.recycler_view_weeks);
         mSpinnerLectors = view.findViewById(R.id.spinner_lectors);
+        mLoadingView = view.findViewById(R.id.loading_view);
     }
 
     /*
@@ -120,27 +142,25 @@ public class FragmentLectures extends Fragment {
 
         dateToday = new Date();
 
-        mProviderLearningProgram = new ProviderLearningProgram();
-
         if (mProviderLearningProgram.provideLectures() == null){
             /*
             * Каждый экземпляр класса AsyncTask может быть запущен всего один раз.
             * Попытка повторного вызова метода execute() приведёт к выбросу исключения.
             * */
-            new LoadLecturesTask(this, savedInstanceState == null).execute();
+            new LoadLecturesTask(this, mProviderLearningProgram.provideLectures() == null).execute();
         }
         else {
             initRecyclerViewLecturesListener();
             initRecyclerViewLectures();
             initRecyclerViewWeeksListener();
             initRecyclerViewWeeks();
-            initSpinnerLectors();
+            initSpinnerLectors(mProviderLearningProgram.provideLectures() == null);
         }
     }
 
-    /*
+    /**
      * Инициализация компонентов RecyclerViewLectures
-     * */
+     */
     private void initRecyclerViewLectures() {
 
         mAdapterLectures = new AdapterLectures();
@@ -152,19 +172,19 @@ public class FragmentLectures extends Fragment {
 
         mRecyclerViewLectures.setLayoutManager(layoutManagerVertical);
         mRecyclerViewLectures.setAdapter(mAdapterLectures);
-        // mRecyclerViewLectures.scrollToPosition(mAdapterLectures.getPositionToday());
+        mRecyclerViewLectures.scrollToPosition(mAdapterLectures.getPositionToday());
     }
 
-    /*
-    * Инициализация обработчика нажатия на ячейку списка лекций
-    * */
+    /**
+     * Инициализация обработчика нажатия на ячейку списка лекций
+     */
     private void initRecyclerViewLecturesListener(){
 
         // РЕАЛИЗОВАТЬ В MainActivity!!!
-        /*
-        * Переход к просмотру более детальной информации о лекции
-        * */
         mOnItemLectureClickListener = new OnItemLectureClickListener() {
+            /**
+             * Переход к просмотру более детальной информации о лекции
+             */
             @Override
             public void onItemClick(@NonNull Lecture lecture) {
                 requireActivity()// получение activity, с которым данный фрагмент связан в текущий момент времени
@@ -177,15 +197,15 @@ public class FragmentLectures extends Fragment {
         };
     }
 
-    /*
-    * Инициализация обработчика нажатия на ячейку списка учебных недель
-    * */
+    /**
+     * Инициализация обработчика нажатия на ячейку списка учебных недель
+     */
     private void initRecyclerViewWeeksListener() {
 
-        /*
-         * Обновление списка лекций в соответствии с указанным преподавателем и № недели
-         * */
         mOnItemWeekClickListener = new OnItemWeekClickListener() {
+            /**
+             * Обновление списка лекций в соответствии с указанным преподавателем и № недели
+             */
             @Override
             public void itemClick(Week week) {
                 indicatorWeek = week;
@@ -203,9 +223,9 @@ public class FragmentLectures extends Fragment {
         };
     }
 
-    /*
+    /**
      * Инициализация компонентов RecyclerViewWeeks
-     * */
+     */
     private void initRecyclerViewWeeks() {
 
         mAdapterWeeks = new AdapterWeeks(mProviderLearningProgram.providerWeeks(), dateToday, mOnItemWeekClickListener);
@@ -215,24 +235,24 @@ public class FragmentLectures extends Fragment {
         mRecyclerViewWeeks.setLayoutManager(layoutManagerHorizontal);
         mRecyclerViewWeeks.setAdapter(mAdapterWeeks);
         mRecyclerViewWeeks.scrollToPosition(mAdapterWeeks.getPositionToday());
+
     }
 
-    /*
+    /**
      * Инициализация компонентов SpinnerLectors
-     * */
-    private void initSpinnerLectors() {
+     */
+    private void initSpinnerLectors(final boolean isFirstCreate) {
 
         final List<String> itemsLectors = mProviderLearningProgram.providerLectors();
         itemsLectors.add(POSITION_ALL, getString(R.string.spinner_lectors_item_all));
 
         mAdapterLectors = new AdapterLectors(itemsLectors);
-
         mSpinnerLectors.setAdapter(mAdapterLectors);
 
-        /*
-         * Обновление списка лекций в соответствии с указанным преподавателем и № недели
-         * */
         mSpinnerLectors.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * Обновление списка лекций в соответствии с указанным преподавателем и № недели
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -240,14 +260,17 @@ public class FragmentLectures extends Fragment {
 
                 if (position == POSITION_ALL) {
 
-                    mAdapterLectures.setLectures(mProviderLearningProgram.provideLectures());
-                    mRecyclerViewLectures.scrollToPosition(mAdapterLectures.getPositionToday());
+                    if (isFirstCreate)
+                        mRecyclerViewLectures.scrollToPosition(mAdapterLectures.getPositionToday());
+                    else{
+                        // дважды производиться загрузка при первом запуске, т.к. выполняеться обработка по выбранной строке
+                        mAdapterLectures.setLectures(mProviderLearningProgram.provideLectures());
+                    }
                 } else if (indicatorWeek != null) {
                     mAdapterLectures.setLectures(mProviderLearningProgram.filterBy(name, indicatorWeek));
                 } else {
                     mAdapterLectures.setLectures(mProviderLearningProgram.filterBy(name));
                 }
-
                 mRecyclerViewLectures.setAdapter(mAdapterLectures);
             }
 
@@ -257,41 +280,48 @@ public class FragmentLectures extends Fragment {
         });
     }
 
-
-    /*
-    * Реализация ассинхронной загрузки данных
-    *
-    * Параметры AsyncTask <
-    * "входной тип для doInBackground",
-    * "входной тип для onProgressUpdate",
-    * "возвращаемый тип doInBackground и входной тип для onPostExecute">
-    * */
+    /**
+     * Реализация ассинхронной загрузки данных
+     *
+     * Параметры AsyncTask:
+     * <"входной тип для doInBackground",
+     * "входной тип для onProgressUpdate",
+     * "возвращаемый тип doInBackground и входной тип для onPostExecute">
+     */
     private static class LoadLecturesTask extends AsyncTask<Void, Void, List<Lecture>>{
 
-        /*
-        * mFragmentRef - слабая ссылка на фрагмент
-        * mProviderLearningProgram - поставщик данных лекций
-        * mIsFirstCreate: true - первое создание, false - последующие
-        * */
-        // слабая ссылка для того, чтобы не было утечки памяти в случае уничтожения фрагмента в момент работы AsyncTask
+        /**
+         * mFragmentRef - слабая ссылка на фрагмент
+         * слабая ссылка для того, чтобы не было утечки памяти в случае уничтожения фрагмента в момент работы AsyncTask
+         */
         private final WeakReference <FragmentLectures> mFragmentRef;
+        /**
+         * mProviderLearningProgram - поставщик данных лекций
+         */
         private final ProviderLearningProgram mProviderLearningProgram;
 
-        private LoadLecturesTask(@NonNull FragmentLectures mFragmentRef, boolean mIsFirstCreate) {
-            this.mFragmentRef = new WeakReference<>(mFragmentRef);
-            this.mProviderLearningProgram = mFragmentRef.mProviderLearningProgram;
+        /**
+         * mIsFirstCreate - флаг для определения первый ли раз производится заружка данных (true - первый, false - последующие)
+         */
+        private boolean mIsFirstCreate;
+
+        private LoadLecturesTask(@NonNull FragmentLectures fragmentRef, boolean isFirstCreate) {
+            this.mFragmentRef = new WeakReference<>(fragmentRef);
+            this.mProviderLearningProgram = fragmentRef.mProviderLearningProgram;
+            this.mIsFirstCreate = isFirstCreate;
         }
 
         @Override
         protected void onPreExecute() {
             FragmentLectures fragmentLectures = mFragmentRef.get();
             if (fragmentLectures != null){
+                fragmentLectures.mLoadingView.setVisibility(View.VISIBLE);
             }
         }
 
         @Override
         protected List<Lecture> doInBackground(Void... voids) {
-            // return mProviderLearningProgram.loadLectureFromData();
+             //return mProviderLearningProgram.loadLectureFromData();
              return mProviderLearningProgram.loadLecturesFromWeb();
         }
 
@@ -300,6 +330,7 @@ public class FragmentLectures extends Fragment {
             FragmentLectures fragmentLectures = mFragmentRef.get();
             if (fragmentLectures == null)
                 return;
+            fragmentLectures.mLoadingView.setVisibility(View.GONE);
             if (lectures == null)
                 Toast.makeText(fragmentLectures.requireContext(), fragmentLectures.getString(R.string.load_lecture_tesk_message_fail), Toast.LENGTH_SHORT).show();
             else {
@@ -307,7 +338,7 @@ public class FragmentLectures extends Fragment {
                 fragmentLectures.initRecyclerViewLectures();
                 fragmentLectures.initRecyclerViewWeeksListener();
                 fragmentLectures.initRecyclerViewWeeks();
-                fragmentLectures.initSpinnerLectors();
+                fragmentLectures.initSpinnerLectors(mIsFirstCreate);
             }
         }
     }

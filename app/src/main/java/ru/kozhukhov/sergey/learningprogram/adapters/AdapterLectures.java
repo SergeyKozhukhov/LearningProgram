@@ -19,27 +19,26 @@ import java.util.Locale;
 import ru.kozhukhov.sergey.learningprogram.R;
 import ru.kozhukhov.sergey.learningprogram.models.Lecture;
 
-/*
- *  Адаптер для отображения списка лекций
- * */
 
+/**
+ * Адаптер для отображения списка лекций
+ */
 public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseViewHolder> {
 
-    /*
-    * mLectures - список лекций
-    * mDateToday - сегодняшняя дата
-    * */
+    /**
+     * mLectures - список лекций
+     */
     private List<Lecture> mLectures;
+
+    /**
+     * mDateToday - сегодняшняя дата
+     */
     private Date mDateToday;
 
-    /*
-    * mOnItemLectureClickListener - обработчик нажатия на элемент списка лекций
-    * */
+    /**
+     * mOnItemLectureClickListener - обработчик нажатия на элемент списка лекций
+     */
     private OnItemLectureClickListener mOnItemLectureClickListener;
-
-    public AdapterLectures(){
-
-    }
 
     @NonNull
     @Override
@@ -62,20 +61,20 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
         return mLectures == null ? 0 : mLectures.size();
     }
 
-    public void setDateToday(Date mDateToday) {
-        this.mDateToday = mDateToday;
+    public void setDateToday(Date dateToday) {
+        this.mDateToday = dateToday;
     }
 
-    /*
-    * Установка обработчика нажатия на элемент списка лекций
-    * */
-    public void setClickListener(@Nullable OnItemLectureClickListener mOnItemLectureClickListener) {
-        this.mOnItemLectureClickListener = mOnItemLectureClickListener;
+    /**
+     * Установка обработчика нажатия на элемент списка лекций
+     */
+    public void setClickListener(@Nullable OnItemLectureClickListener onItemLectureClickListener) {
+        this.mOnItemLectureClickListener = onItemLectureClickListener;
     }
 
-    /*
-     *  Установка списка лекций в адаптер
-     * */
+    /**
+     * Установка списка лекций в адаптер
+     */
     public void setLectures(@NonNull List<Lecture> lectures) {
         if (lectures == null) {
             mLectures = new ArrayList<>();
@@ -85,11 +84,9 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
         notifyDataSetChanged();
     }
 
-    /*
+    /**
      * Возвращение позиции лекции, проходящей сегодня или ближайшей к сегодняшней дате
-     *
-     * @param lecture - лекция, определение позиции которой требуется
-     * */
+     */
     public int getPositionToday()
     {
         for (int i = 0; i < mLectures.size(); i++) {
@@ -115,7 +112,6 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
         private final TextView mLector;
         private final ImageView mImage;
 
-
         private final Date mDateToday;
         private SimpleDateFormat dateFormat;
 
@@ -131,7 +127,7 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
             dateFormat = new SimpleDateFormat("EEEE, d MMMM yyyy", Locale.getDefault());
         }
 
-        private void bindView(final Lecture lecture, final OnItemLectureClickListener mOnItemLectureClickListener) {
+        private void bindView(final Lecture lecture, final OnItemLectureClickListener onItemLectureClickListener) {
 
             mNumber.setText(String.valueOf(lecture.getNumber()));
             mDate.setText(dateFormat.format(lecture.getDate().getTime()));
@@ -139,17 +135,19 @@ public class AdapterLectures extends RecyclerView.Adapter<AdapterLectures.BaseVi
             mLector.setText(String.valueOf(lecture.getLector()));
 
             if (lecture.getDate().getTime().before(mDateToday)) {
-                mImage.setImageLevel(1500);
+                // mImage.setBackgroundColor(0xFFB22222) - для хардкор установки цвета
+                // важно прописать FF, иначе цвет будет прозрачный
+                mImage.setBackgroundColor(itemView.getResources().getColor(R.color.colorBefore));
             } else if (lecture.getDate().getTime().equals(mDateToday)) {
-                mImage.setImageLevel(5000);
+                mImage.setBackgroundColor(itemView.getResources().getColor(R.color.colorNow));
             } else {
-                mImage.setImageLevel(8000);
+                mImage.setBackgroundColor(itemView.getResources().getColor(R.color.colorAfter));
             }
-            if (mOnItemLectureClickListener != null)
+            if (onItemLectureClickListener != null)
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemLectureClickListener.onItemClick(lecture);
+                    onItemLectureClickListener.onItemClick(lecture);
                 }
             });
         }

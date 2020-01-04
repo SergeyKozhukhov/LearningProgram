@@ -8,15 +8,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/*
- *  Адаптер для отображения списка преподавателей
- * */
+/**
+ * Адаптер для отображения списка преподавателей
+ */
 public class AdapterLectors extends BaseAdapter {
 
+    /**
+     * mLectors - список преподавателей
+     */
     private List<String> mLectors;
 
-    public AdapterLectors(List<String> mLectors) {
-        this.mLectors = mLectors;
+    public AdapterLectors(List<String> lectors) {
+        this.mLectors = lectors;
     }
 
     @Override

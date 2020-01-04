@@ -14,18 +14,17 @@
         android:gravity="center"
         android:textSize="@dimen/item_week_tv_period_text_size"
         android:paddingTop="@dimen/item_week_tv_period_padding_top"
-        android:paddingLeft="@dimen/item_week_tv_period_padding_left"
-        android:paddingRight="@dimen/item_week_tv_period_padding_right"
+        android:paddingStart="@dimen/item_week_tv_period_padding_left"
+        android:paddingEnd="@dimen/item_week_tv_period_padding_right"
         tools:text = "Date" />
 
     <ImageView
         android:id="@+id/_item_week_ImageView_indicator"
-        android:src="@drawable/indicator_time"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_week_iv_indicator_height"
-        android:paddingLeft="@dimen/item_week_iv_indicator_padding_left"
-        android:paddingRight="@dimen/item_week_iv_indicator_padding_right"
         android:layout_marginBottom="@dimen/item_week_iv_indicator_margin_bottom"
+        android:layout_marginStart="@dimen/item_week_iv_indicator_margin_left"
+        android:layout_marginEnd="@dimen/item_week_iv_indicator_margin_right"
        />
 
 </LinearLayout>

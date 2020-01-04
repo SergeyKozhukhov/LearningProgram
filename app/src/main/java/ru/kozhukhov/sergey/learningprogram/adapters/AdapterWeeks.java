@@ -17,26 +17,29 @@ import ru.kozhukhov.sergey.learningprogram.R;
 import ru.kozhukhov.sergey.learningprogram.models.Week;
 
 
-/*
- *  Адаптер для отображения списка недель
- * */
+/**
+ * Адаптер для отображения списка недель
+ */
 public class AdapterWeeks extends RecyclerView.Adapter<AdapterWeeks.ViewHolder> {
 
-    /*
+    /**
      * mWeeks - список недель
-     * mDateToday - сегодняшняя дата
-     * */
+     */
     private final List<Week> mWeeks;
+
+    /**
+     * mDateToday - сегодняшняя дата
+     */
     private final GregorianCalendar mDateToday;
 
-    /*
+    /**
      * mOnItemWeekClickListener - обработчик нажатия на ячейку
-     * */
+     */
     private OnItemWeekClickListener mOnItemWeekClickListener;
 
-    public AdapterWeeks(List<Week> mWeeks, Date dateToday, OnItemWeekClickListener onItemWeekClickListener) {
+    public AdapterWeeks(List<Week> weeks, Date dateToday, OnItemWeekClickListener onItemWeekClickListener) {
 
-        this.mWeeks = mWeeks;
+        this.mWeeks = weeks;
         this.mOnItemWeekClickListener = onItemWeekClickListener;
 
         GregorianCalendar calendar = new GregorianCalendar();
@@ -44,9 +47,10 @@ public class AdapterWeeks extends RecyclerView.Adapter<AdapterWeeks.ViewHolder> 
         this.mDateToday = calendar;
     }
 
-    /*
-    * Возвращение позиции недели, которая соответствует сегодняшней дате
-    * */
+    /**
+     * Возвращение позиции недели, которая соответствует сегодняшней дате
+     * @return позиция недели
+     */
     public int getPositionToday() {
 
         Week week = new Week(mDateToday);
@@ -59,7 +63,6 @@ public class AdapterWeeks extends RecyclerView.Adapter<AdapterWeeks.ViewHolder> 
         }
         return mWeeks.size() - 1;
     }
-
 
     @NonNull
     @Override
@@ -93,28 +96,21 @@ public class AdapterWeeks extends RecyclerView.Adapter<AdapterWeeks.ViewHolder> 
             mTextViewWeek = itemView.findViewById(R.id.item_week_and_year_textView_period);
             mImage = itemView.findViewById(R.id._item_week_ImageView_indicator);
             mWeek = new Week(dateToday);
-
         }
 
         private void bindView(final Week week, final OnItemWeekClickListener listener) {
 
             if (mWeek.after(week)) {
-                mImage.setImageLevel(1500);
+                // mImage.setBackgroundColor(0xFFB22222) - для хардкорной установки цвета
+                // важно прописать FF, иначе цвет будет прозрачный
+                mImage.setBackgroundColor(itemView.getResources().getColor(R.color.colorBefore));
             } else if (mWeek.equals(week)) {
-                mImage.setImageLevel(5000);
+                mImage.setBackgroundColor(itemView.getResources().getColor(R.color.colorNow));
             } else {
-                mImage.setImageLevel(8000);
+                mImage.setBackgroundColor(itemView.getResources().getColor(R.color.colorAfter));
             }
 
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("Год: ");
-            stringBuilder.append(week.getYear());
-            stringBuilder.append(", неделя: ");
-            stringBuilder.append(")\n ");
-            stringBuilder.append("Учебная неделя: ");
-            stringBuilder.append(getAdapterPosition() + 1);
-
-            mTextViewWeek.setText(stringBuilder);
+            mTextViewWeek.setText(itemView.getResources().getString(R.string.item_week_text, week.getYear(), week.getWeek(), getAdapterPosition() + 1));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

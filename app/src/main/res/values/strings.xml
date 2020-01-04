@@ -5,4 +5,8 @@
     <string name="fragment_details_tv_text">Подробная информация</string>
     <string name="item_lecture_tv_theme_text">Тема лекции</string>
     <string name="item_lecture_tv_lector_text">Лектор</string>
+
+    <string name="item_week_text">(Год: %1$d, неделя: %2$d)\nУчебная неделя: %3$d</string>
+    <string name="fragment_details_info_text">%1$d: %2$s</string>
+
 </resources>

@@ -4,16 +4,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/*
+/**
  * Модель недели, на которой проводиться занятие
- * */
+ */
 public class Week {
 
-    /*
+    /**
      * week - порядковый номер недели, начиная с начала года
-     * year - год
-     * */
+     */
     private int week;
+
+    /**
+     * year - год
+     */
     private int year;
 
     public Week(int week, int year) {
@@ -25,7 +28,6 @@ public class Week {
         this.week = calendar.get(Calendar.WEEK_OF_YEAR);
         this.year = calendar.get(Calendar.YEAR);
     }
-
 
     public Week(Date date) {
         GregorianCalendar calendar = new GregorianCalendar();
@@ -64,10 +66,10 @@ public class Week {
 
     }
 
-    /*
-    * Проверка позже ли идет текущая неделя
-    * @param that - неделя, с которой идет сравнение
-    * */
+    /**
+     * Проверка позже ли идет текущая неделя
+     * @param that - неделя, с которой идет сравнение
+     */
     public boolean after(Week that) {
 
         if (this.year > that.year)

@@ -11,18 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-* Адаптер для отображения детальной информации о лекции
-* */
+import ru.kozhukhov.sergey.learningprogram.R;
+
+/**
+ * Адаптер для отображения детальной информации о лекции
+ */
 public class AdapterLectureDetails extends RecyclerView.Adapter<AdapterLectureDetails.LectureDetailHolder> {
 
-    /*
-    * mSubtopics - список дополнитльной информации по лекции
-    * */
+    /**
+     * mSubtopics - список дополнитльной информации по лекции
+     */
     private final List<String> mSubtopics;
 
-    public AdapterLectureDetails(@NonNull List<String> mSubtopics) {
-        this.mSubtopics = new ArrayList<>(mSubtopics);
+    public AdapterLectureDetails(@NonNull List<String> subtopics) {
+        this.mSubtopics = new ArrayList<>(subtopics);
     }
 
     @NonNull
@@ -34,14 +36,7 @@ public class AdapterLectureDetails extends RecyclerView.Adapter<AdapterLectureDe
 
     @Override
     public void onBindViewHolder(@NonNull LectureDetailHolder holder, int position) {
-        /*
-        * Формат отображения доп. информации: "№ пункта: информация"
-        * */
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(position+1);
-        stringBuilder.append(": ");
-        stringBuilder.append(mSubtopics.get(position));
-        holder.mName.setText(stringBuilder);
+        holder.bindView(mSubtopics.get(position));
     }
 
     @Override
@@ -56,6 +51,13 @@ public class AdapterLectureDetails extends RecyclerView.Adapter<AdapterLectureDe
         LectureDetailHolder(@NonNull View itemView) {
             super(itemView);
             mName = itemView.findViewById(android.R.id.text1);
+        }
+
+        private void bindView(final String subtopic){
+            /*
+             * Формат отображения доп. информации: "№ пункта: информация"
+             * */
+            mName.setText(itemView.getResources().getString(R.string.fragment_details_info_text, getAdapterPosition()+1, subtopic));
         }
     }
 }
